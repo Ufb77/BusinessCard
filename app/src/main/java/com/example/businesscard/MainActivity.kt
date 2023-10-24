@@ -72,16 +72,27 @@ fun Cabecera(name: String, modifier: Modifier = Modifier) {
 
     val backgroundHead = painterResource(R.drawable.headbackgroundcrop)
     val myPicture = painterResource(R.drawable.me)
+    val infiniteTransition = rememberInfiniteTransition(label = "infinite")
+    val color by infiniteTransition.animateColor(
+        initialValue = Color.Green,
+        targetValue = Color.Blue,
+        animationSpec = infiniteRepeatable(
+            animation = tween(7000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "color"
+    )
 
     Box(
-        modifier = Modifier,
+        modifier = Modifier.drawBehind {
+            drawRect(color)},
         contentAlignment = Alignment.TopCenter
     ) {
         Image(
             painter = backgroundHead,
             contentDescription = null,
             alignment = Alignment.TopCenter,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().padding(10.dp)
         )
 
         Column(
