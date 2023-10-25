@@ -10,22 +10,12 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -33,21 +23,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.ContentScale.Companion.Crop
-import androidx.compose.ui.layout.ContentScale.Companion.FillBounds
-import androidx.compose.ui.layout.ContentScale.Companion.FillWidth
-import androidx.compose.ui.layout.ContentScale.Companion.Fit
-import androidx.compose.ui.layout.ContentScale.Companion.None
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.businesscard.ui.theme.BusinessCardTheme
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +55,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Cabecera(name: String, modifier: Modifier = Modifier) {
 
-    val backgroundHead = painterResource(R.drawable.headbackgroundcrop)
+    val background = painterResource(R.drawable.pexels_dlkr_5676478)
     val myPicture = painterResource(R.drawable.me)
     val infiniteTransition = rememberInfiniteTransition(label = "infinite")
     val color by infiniteTransition.animateColor(
@@ -83,47 +68,49 @@ fun Cabecera(name: String, modifier: Modifier = Modifier) {
         label = "color"
     )
 
-    Box(
-        modifier = Modifier.drawBehind {
-            drawRect(color)},
-        contentAlignment = Alignment.TopCenter
-    ) {
+    Box (
+        modifier = Modifier.fillMaxSize()
+    ){
         Image(
-            painter = backgroundHead,
+            painter = painterResource(R.drawable.pexels_dlkr_5676478) ,
             contentDescription = null,
-            alignment = Alignment.TopCenter,
-            modifier = Modifier.fillMaxSize().padding(10.dp)
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .blur(
+                    radius = 5.dp,
+                    edgeTreatment = BlurredEdgeTreatment.Rectangle
+                )
+
         )
 
         Column(
-            verticalArrangement = Arrangement.Center,
+
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
+
 
         ){
 
             Image(
-                painter = myPicture,
+                painter = painterResource(R.drawable.me),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply {
-                    setToSaturation(0f)
-                }),
                 modifier = Modifier
-                    .padding(top = 50.dp, bottom = 20.dp)
                     .size(100.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                alignment = Alignment.Center
-
+                    .clip(shape = RoundedCornerShape(20.dp))
             )
+
             Text(
                 text = "José Antonio Fernández-Montes García",
-                modifier = Modifier.padding(top = 5.dp).background(Color.LightGray)
+                modifier = Modifier.padding(top = 10.dp)
             )
         }
-
-
-
     }
+
+
+
 
 
 
