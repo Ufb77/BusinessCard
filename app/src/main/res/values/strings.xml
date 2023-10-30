@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BusinessCard</string>
+    <string name="Nombre">Jose Antonio Fernandez-Montes García</string>
+    <string name="empresa">Tencent 腾讯</string>
+    <string name="email">jafmgdam@gmail.com</string>
+    <string name="myWeb">github.com/Ufb77</string>
+    <string name="Studies">App Developer</string>
 </resources>
